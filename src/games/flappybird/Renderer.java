@@ -6,7 +6,7 @@ import java.awt.geom.AffineTransform;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Renderer extends JComponent {
+public class Renderer extends JPanel {
 
     private final List<Drawable> drawables = new LinkedList<>();
     private final AffineTransform transform = new AffineTransform();

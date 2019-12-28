@@ -27,12 +27,12 @@ public class VisiblePipes implements Drawable {
 
     public void createPipe(PipeSettings settings, int windowHeight) {
         int x = pipesCount * (settings.getWidth() + settings.getSpace());
-        float bottomHeight = Maths.randomf(100, windowHeight - settings.getHoleHeight() - 100);
-        float topY = bottomHeight + settings.getHoleHeight();
+        float bottomHeight = Maths.randomf(0, windowHeight - settings.getHoleHeight() - 200);
+        float topY = bottomHeight + settings.getHoleHeight() + settings.getGround();
         float topHeight = windowHeight - topY;
 
         final Rectangle bottom = new Rectangle(
-                x, 0, settings.getWidth(), bottomHeight);
+                x, settings.getGround(), settings.getWidth(), bottomHeight);
         final Rectangle top = new Rectangle(
                 x, topY, settings.getWidth(), topHeight);
         add(new Pipe(bottom, top));
@@ -49,6 +49,15 @@ public class VisiblePipes implements Drawable {
 
     public List<Pipe> getPipes() {
         return pipes;
+    }
+
+    public boolean isColliding(Rectangle bounds) {
+        for (Pipe pipe : pipes) {
+            if (pipe.isColliding(bounds)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

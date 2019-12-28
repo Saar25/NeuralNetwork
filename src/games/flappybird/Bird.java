@@ -8,8 +8,8 @@ import java.awt.*;
 
 public class Bird implements Drawable {
 
-    private static final int jumpPower = 30;
-    private static final int gravity = -10;
+    private static final int jumpPower = 100;
+    private static final int gravity = -100;
     private static final int xSpeed = 100;
 
     private final NeuralNetwork brain;
@@ -62,13 +62,7 @@ public class Bird implements Drawable {
     }
 
     public boolean isColliding(VisiblePipes pipes) {
-        final Rectangle bounds = new Rectangle(getPosition(), getDimensions());
-        for (Pipe pipe : pipes.getPipes()) {
-            if (pipe.isColliding(bounds)) {
-                return true;
-            }
-        }
-        return false;
+        return pipes.isColliding(new Rectangle(getPosition(), getDimensions()));
     }
 
     public boolean isColliding(Rectangle bounds) {
@@ -87,6 +81,7 @@ public class Bird implements Drawable {
 
     @Override
     public void draw(Graphics g) {
+        g.setColor(Color.RED);
         g.fillRect((int) getPosition().getX(), (int) getPosition().getY(),
                 (int) getDimensions().getX(), (int) getDimensions().getY());
     }

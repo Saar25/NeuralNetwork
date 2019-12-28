@@ -10,6 +10,7 @@ public class BirdPopulation implements Drawable {
 
     private final List<Bird> population = new LinkedList<>();
     private final List<Bird> survivors = new LinkedList<>();
+    private final Score score = new Score();
 
     public void add(Bird bird) {
         this.population.add(bird);
@@ -32,7 +33,8 @@ public class BirdPopulation implements Drawable {
     public void filter(VisiblePipes pipes, Rectangle bounds) {
         final List<Bird> died = new LinkedList<>();
         for (Bird bird : population) {
-            if (!bird.isColliding(bounds) || bird.isColliding(pipes)) {
+            if (bird.getPosition().getY() + bird.getDimensions().getY() >= bounds.yMax() ||
+                    bird.getPosition().getY() < bounds.yMin() || bird.isColliding(pipes)) {
                 survivors.add(0, bird);
                 died.add(bird);
             }
@@ -56,6 +58,8 @@ public class BirdPopulation implements Drawable {
     }
 
     public void nextGeneration(GenerationSettings settings, Vector2 startingPosition) {
+        getScore().reset();
+
         population.clear();
         final int mutationsPerBird = settings.getMutationsPerEach();
         for (int i = 0; i < settings.getSurvivorsCount(); i++) {
@@ -63,8 +67,13 @@ public class BirdPopulation implements Drawable {
             for (int j = 0; j < mutationsPerBird; j++) {
                 final Bird mutated = bird.mutate(settings.getMutationRate());
                 mutated.getPosition().set(startingPosition);
+                System.out.println(mutated);
                 population.add(mutated);
             }
         }
+    }
+
+    public Score getScore() {
+        return score;
     }
 }
