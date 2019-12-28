@@ -71,6 +71,11 @@ public class Vector2Mutable implements Vector2 {
     }
 
     @Override
+    public Vector2 copy() {
+        return new Vector2Mutable(x, y);
+    }
+
+    @Override
     public String toString() {
         return String.format("(%.3f, %.3f)", x, y);
     }

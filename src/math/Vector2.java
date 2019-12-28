@@ -24,6 +24,8 @@ public interface Vector2 {
 
     Vector2 set(float x, float y);
 
+    Vector2 copy();
+
     default Vector2 add(Vector2 v) {
         return add(v.getX(), v.getY());
     }

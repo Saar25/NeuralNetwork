@@ -22,4 +22,8 @@ public class StopWatch {
         return time != -1 ? time : System.currentTimeMillis() - start;
     }
 
+    public float timeInSeconds() {
+        return time() / 1000f;
+    }
+
 }

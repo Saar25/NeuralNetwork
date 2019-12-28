@@ -5,35 +5,35 @@ import neural.MatrixNeuralNetwork;
 import neural.NeuralNetwork;
 
 import java.awt.*;
-import java.util.List;
 
 public class Bird implements Drawable {
 
     private static final int jumpPower = 30;
     private static final int gravity = -10;
-    private static final int xSpeed = 10;
+    private static final int xSpeed = 100;
 
     private final NeuralNetwork brain;
 
-    private final Rectangle bounds;
-    private final Vector2 velocity;
+    private final Vector2 position;
+    private final Vector2 dimensions;
 
-    private int score = 0;
+    private final Vector2 velocity = Vector2.mutable(xSpeed, 0);
 
-    public Bird(Rectangle bounds) {
-        this.bounds = bounds;
-        this.brain = new MatrixNeuralNetwork(4, 4, 2);
-        this.velocity = Vector2.mutable(xSpeed, 0);
+    public Bird(Vector2 position, Vector2 dimensions) {
+        this(position, dimensions, new MatrixNeuralNetwork(4, 4, 2));
     }
 
-    public Bird(Rectangle bounds, NeuralNetwork brain) {
+    public Bird(Vector2 position, Vector2 dimensions, NeuralNetwork brain) {
         this.brain = brain;
-        this.bounds = bounds;
-        this.velocity = Vector2.mutable(xSpeed, 0);
+        this.position = position;
+        this.dimensions = dimensions;
     }
 
-    public Bird mutate(Rectangle bounds, float rate) {
-        return new Bird(bounds, brain.mutate(rate));
+    public Bird mutate(float rate) {
+        final Vector2 position = getPosition().copy();
+        final Vector2 dimensions = getDimensions().copy();
+        final NeuralNetwork mutatedBrain = brain.mutate(rate);
+        return new Bird(position, dimensions, mutatedBrain);
     }
 
     public void jump() {
@@ -53,7 +53,7 @@ public class Bird implements Drawable {
         }
 
         this.velocity.add(0, gravity * interval).mul(interval);
-        this.bounds.getPosition().add(velocity);
+        this.getPosition().add(velocity);
         this.velocity.div(interval);
     }
 
@@ -61,8 +61,9 @@ public class Bird implements Drawable {
         this.velocity.add(x, 0);
     }
 
-    public boolean isColliding(List<Pipe> pipes) {
-        for (Pipe pipe : pipes) {
+    public boolean isColliding(VisiblePipes pipes) {
+        final Rectangle bounds = new Rectangle(getPosition(), getDimensions());
+        for (Pipe pipe : pipes.getPipes()) {
             if (pipe.isColliding(bounds)) {
                 return true;
             }
@@ -70,25 +71,22 @@ public class Bird implements Drawable {
         return false;
     }
 
-    public void incScore() {
-        this.score++;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
     public Vector2 getPosition() {
-        return bounds.getPosition();
+        return position;
+    }
+
+    public Vector2 getDimensions() {
+        return dimensions;
     }
 
     @Override
     public void draw(Graphics g) {
-        bounds.draw(g);
+        g.fillRect((int) getPosition().getX(), (int) getPosition().getY(),
+                (int) getDimensions().getX(), (int) getDimensions().getY());
     }
 
     @Override
     public String toString() {
-        return "Bird: Score: " + score + ", \nBrain: " + brain.toString();
+        return "Bird: \nBrain: " + brain.toString();
     }
 }
