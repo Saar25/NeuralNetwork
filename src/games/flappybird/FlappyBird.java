@@ -1,6 +1,5 @@
 package games.flappybird;
 
-import math.Maths;
 import math.Vector2;
 import util.Interval;
 
@@ -10,11 +9,11 @@ public class FlappyBird {
 
     private static final int WIDTH = 1000;
     private static final int HEIGHT = 700;
+    private static final int X_OFFSET = 50;
 
-    private static final int survivorsCount = 10;
-    private static final int populationSize = 100;
-    private static final int mutations = populationSize / survivorsCount;
-    private static final float mutationRate = .05f;
+    private static final GenerationSettings GENERATION_SETTINGS = new GenerationSettings(100, 10, .5f);
+    private static final PipeSettings PIPE_SETTINGS = new PipeSettings(100, 500, 150);
+    private static final Vector2 STARTING_POSITION = Vector2.mutable(X_OFFSET, HEIGHT / 2f);
 
     private final Window window = new Window("Flappy bird");
     private final Renderer renderer = new Renderer();
@@ -42,35 +41,46 @@ public class FlappyBird {
         this.renderer.add(population);
 
         final Vector2 birdDimensions = Vector2.immutable(50, 50);
-        for (int i = 0; i < populationSize; i++) {
-            final Vector2 birdPosition = Vector2.mutable(50, 500);
+        for (int i = 0; i < GENERATION_SETTINGS.getPopulationSize(); i++) {
+            final Vector2 birdPosition = STARTING_POSITION.copy();
             population.add(new Bird(birdPosition, birdDimensions));
         }
 
-        final float width = 100;
-        final float space = 500;
-        final float holeHeight = 150;
+        restart();
+    }
 
-        float x = 500 + (width + space) / 2;
-        float bottomHeight = Maths.randomf(100, HEIGHT - holeHeight - 100);
-        float topY = bottomHeight + holeHeight;
-        float topHeight = HEIGHT - topY;
-
-        Rectangle bottom = new Rectangle(x, 0, width, bottomHeight);
-        Rectangle top = new Rectangle(x, topY, width, topHeight);
-        visiblePipes.add(new Pipe(top, bottom));
+    private void restart() {
+        visiblePipes.clear();
+        visiblePipes.createPipe(PIPE_SETTINGS, HEIGHT);
+        visiblePipes.createPipe(PIPE_SETTINGS, HEIGHT);
+        visiblePipes.createPipe(PIPE_SETTINGS, HEIGHT);
+        visiblePipes.createPipe(PIPE_SETTINGS, HEIGHT);
 
         interval.restart();
     }
 
     private void update() {
         this.population.update(interval.seconds(), visiblePipes.getFirst());
-        this.population.filter(visiblePipes, new Rectangle(0, 0, WIDTH, HEIGHT));
+
+        final int currentX = (int) (population.getCurrentX() - X_OFFSET);
+        this.population.filter(visiblePipes, new Rectangle(
+                currentX, 0, currentX + WIDTH, HEIGHT));
+
+        if (population.count() == 0) {
+            restart();
+            population.nextGeneration(GENERATION_SETTINGS, STARTING_POSITION);
+        }
+
+        if (visiblePipes.getFirst().getBottom().xMax() < 0) {
+            visiblePipes.createPipe(PIPE_SETTINGS, HEIGHT);
+        }
+
         interval.restart();
     }
 
     private void repaint() {
-        this.renderer.getTransform().setToTranslation(50 - population.getCurrentX(), 0);
+        this.renderer.getTransform().setToTranslation(
+                X_OFFSET - population.getCurrentX(), 0);
         this.renderer.repaint();
     }
 }

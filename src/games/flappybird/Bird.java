@@ -71,6 +71,12 @@ public class Bird implements Drawable {
         return false;
     }
 
+    public boolean isColliding(Rectangle bounds) {
+        final Rectangle birdBounds = new Rectangle(
+                getPosition(), getDimensions());
+        return bounds.isColliding(birdBounds);
+    }
+
     public Vector2 getPosition() {
         return position;
     }

@@ -1,5 +1,7 @@
 package games.flappybird;
 
+import math.Vector2;
+
 import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.List;
 public class BirdPopulation implements Drawable {
 
     private final List<Bird> population = new LinkedList<>();
+    private final List<Bird> survivors = new LinkedList<>();
 
     public void add(Bird bird) {
         this.population.add(bird);
@@ -16,7 +19,7 @@ public class BirdPopulation implements Drawable {
         this.population.clear();
     }
 
-    public int size() {
+    public int count() {
         return population.size();
     }
 
@@ -29,9 +32,8 @@ public class BirdPopulation implements Drawable {
     public void filter(VisiblePipes pipes, Rectangle bounds) {
         final List<Bird> died = new LinkedList<>();
         for (Bird bird : population) {
-            if (bird.getPosition().getY() > bounds.yMax()
-                    || bird.getPosition().getY() < bounds.yMin()
-                    || bird.isColliding(pipes)) {
+            if (!bird.isColliding(bounds) || bird.isColliding(pipes)) {
+                survivors.add(0, bird);
                 died.add(bird);
             }
         }
@@ -39,14 +41,30 @@ public class BirdPopulation implements Drawable {
     }
 
     public double getCurrentX() {
-        final Bird bird = population.get(0);
-        return bird.getPosition().getX();
+        if (count() != 0) {
+            final Bird bird = population.get(0);
+            return bird.getPosition().getX();
+        }
+        return 0;
     }
 
     @Override
     public void draw(Graphics g) {
         for (Bird bird : population) {
             bird.draw(g);
+        }
+    }
+
+    public void nextGeneration(GenerationSettings settings, Vector2 startingPosition) {
+        population.clear();
+        final int mutationsPerBird = settings.getMutationsPerEach();
+        for (int i = 0; i < settings.getSurvivorsCount(); i++) {
+            final Bird bird = survivors.get(i);
+            for (int j = 0; j < mutationsPerBird; j++) {
+                final Bird mutated = bird.mutate(settings.getMutationRate());
+                mutated.getPosition().set(startingPosition);
+                population.add(mutated);
+            }
         }
     }
 }

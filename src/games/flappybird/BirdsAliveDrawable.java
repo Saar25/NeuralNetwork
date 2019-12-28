@@ -15,7 +15,7 @@ public class BirdsAliveDrawable implements Drawable {
     @Override
     public void draw(Graphics g) {
         g.setFont(new Font("default", Font.BOLD, 24));
-        final String string = "Birds alive: " + population.size();
+        final String string = "Birds alive: " + population.count();
         final int stringLength = g.getFontMetrics().stringWidth(string);
         g.drawString(string, (windowWidth - stringLength) / 2, 85);
     }
