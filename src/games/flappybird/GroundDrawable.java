@@ -1,5 +1,7 @@
 package games.flappybird;
 
+import games.gui.Drawable;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 

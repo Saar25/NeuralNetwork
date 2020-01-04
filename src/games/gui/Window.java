@@ -1,4 +1,4 @@
-package games.flappybird;
+package games.gui;
 
 import javax.swing.*;
 

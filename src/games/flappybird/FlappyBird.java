@@ -1,5 +1,8 @@
 package games.flappybird;
 
+import games.gui.Rectangle;
+import games.gui.Renderer;
+import games.gui.Window;
 import math.Vector2;
 import util.Interval;
 
@@ -13,7 +16,7 @@ public class FlappyBird {
     private static final int X_OFFSET = 50;
     private static final int GROUND = 120;
 
-    private static final GenerationSettings GENERATION_SETTINGS = new GenerationSettings(100, 1, .5f);
+    private static final GenerationSettings GENERATION_SETTINGS = new GenerationSettings(100, 10, 0.5f);
     private static final PipeSettings PIPE_SETTINGS = new PipeSettings(100, 500, 150, GROUND);
     private static final Vector2 STARTING_POSITION = Vector2.mutable(X_OFFSET, HEIGHT / 2f);
 
@@ -66,7 +69,7 @@ public class FlappyBird {
     }
 
     private void update() {
-        this.population.update(interval.seconds(), visiblePipes.getFirst());
+        this.population.update(interval.seconds() * 10, visiblePipes.getFirst());
 
         final int currentX = (int) (population.getCurrentX() - X_OFFSET);
         this.population.filter(visiblePipes, new Rectangle(

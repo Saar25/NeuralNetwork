@@ -1,5 +1,7 @@
 package games.flappybird;
 
+import games.gui.Drawable;
+import games.gui.Rectangle;
 import math.Maths;
 
 import java.awt.*;
@@ -32,9 +34,9 @@ public class VisiblePipes implements Drawable {
         float topHeight = windowHeight - topY;
 
         final Rectangle bottom = new Rectangle(
-                x, settings.getGround(), settings.getWidth(), bottomHeight);
-        final Rectangle top = new Rectangle(
                 x, topY, settings.getWidth(), topHeight);
+        final Rectangle top = new Rectangle(
+                x, settings.getGround(), settings.getWidth(), bottomHeight);
         add(new Pipe(bottom, top));
     }
 

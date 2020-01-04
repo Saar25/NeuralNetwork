@@ -1,18 +1,20 @@
 package games.flappybird;
 
+import games.gui.Drawable;
+import games.gui.Rectangle;
 import math.Vector2;
 import neural.MatrixNeuralNetwork;
-import neural.NeuralNetwork;
 
 import java.awt.*;
 
 public class Bird implements Drawable {
 
-    private static final int jumpPower = 100;
-    private static final int gravity = -100;
-    private static final int xSpeed = 100;
+    private static final Color birdColour = new Color(255, 0, 0, 50);
+    private static final int jumpPower = 30;
+    private static final int gravity = -10;
+    private static final int xSpeed = 10;
 
-    private final NeuralNetwork brain;
+    private final BirdBrain brain;
 
     private final Vector2 position;
     private final Vector2 dimensions;
@@ -20,10 +22,10 @@ public class Bird implements Drawable {
     private final Vector2 velocity = Vector2.mutable(xSpeed, 0);
 
     public Bird(Vector2 position, Vector2 dimensions) {
-        this(position, dimensions, new MatrixNeuralNetwork(4, 4, 2));
+        this(position, dimensions, new BirdBrain(new MatrixNeuralNetwork(4, 4, 2)));
     }
 
-    public Bird(Vector2 position, Vector2 dimensions, NeuralNetwork brain) {
+    public Bird(Vector2 position, Vector2 dimensions, BirdBrain brain) {
         this.brain = brain;
         this.position = position;
         this.dimensions = dimensions;
@@ -32,7 +34,7 @@ public class Bird implements Drawable {
     public Bird mutate(float rate) {
         final Vector2 position = getPosition().copy();
         final Vector2 dimensions = getDimensions().copy();
-        final NeuralNetwork mutatedBrain = brain.mutate(rate);
+        final BirdBrain mutatedBrain = brain.mutate(rate);
         return new Bird(position, dimensions, mutatedBrain);
     }
 
@@ -41,16 +43,7 @@ public class Bird implements Drawable {
     }
 
     public void update(float interval, Pipe pipe) {
-        float[] inputs = {
-                getPosition().getY(),
-                pipe.getBottom().xMin() - getPosition().getX(),
-                pipe.getBottom().yMax(),
-                pipe.getTop().yMin(),
-        };
-        float[] outputs = brain.feedForward(inputs);
-        if (outputs[0] > outputs[1]) {
-            jump();
-        }
+        this.brain.act(this, pipe);
 
         this.velocity.add(0, gravity * interval).mul(interval);
         this.getPosition().add(velocity);
@@ -81,7 +74,7 @@ public class Bird implements Drawable {
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.RED);
+        g.setColor(birdColour);
         g.fillRect((int) getPosition().getX(), (int) getPosition().getY(),
                 (int) getDimensions().getX(), (int) getDimensions().getY());
     }

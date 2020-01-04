@@ -66,7 +66,7 @@ public class Vector2Immutable implements Vector2 {
 
     @Override
     public Vector2 copy() {
-        return new Vector2Immutable(x, y);
+        return this;
     }
 
     @Override
