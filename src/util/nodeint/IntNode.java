@@ -1,15 +1,26 @@
 package util.nodeint;
 
 import util.LazyInt;
+import util.Node;
 
-public class NodeInt {
+public class IntNode implements Node<Integer> {
 
     private final LazyInt a;
     private final LazyInt b;
 
-    public NodeInt(LazyInt a, LazyInt b) {
+    public IntNode(LazyInt a, LazyInt b) {
         this.a = a;
         this.b = b;
+    }
+
+    @Override
+    public Node<Integer> getNext() {
+        return null;
+    }
+
+    @Override
+    public Integer getValue() {
+        return null;
     }
 
     public boolean isHigher(float value) {
