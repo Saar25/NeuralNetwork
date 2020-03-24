@@ -1,5 +1,7 @@
 package util;
 
+import util.lazy.LazyInt;
+
 public class Progress {
 
     private final long startTime = System.currentTimeMillis();

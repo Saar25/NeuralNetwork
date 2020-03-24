@@ -1,8 +1,8 @@
-package util;
+package util.lazy;
 
 import java.util.function.Supplier;
 
-public class Lazy<T> {
+public class Lazy<T> implements Supplier<T> {
 
     private final Supplier<T> supplier;
     private boolean assigned;
@@ -19,21 +19,25 @@ public class Lazy<T> {
         this.value = value;
     }
 
-    public T get() {
-        if (!assigned) {
-            assigned = true;
-            value = supplier.get();
-        }
-        return value;
+    public boolean isAssigned() {
+        return assigned;
     }
 
     public T reassign() {
-        assigned = true;
+        this.assigned = true;
         return value = supplier.get();
     }
 
     public void forget() {
-        assigned = false;
+        this.assigned = false;
+    }
+
+    @Override
+    public T get() {
+        if (!isAssigned()) {
+            reassign();
+        }
+        return value;
     }
 
     @Override

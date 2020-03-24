@@ -1,6 +1,6 @@
 package util.floatnode;
 
-import util.LazyFloat;
+import util.lazy.LazyFloat;
 import util.Node;
 
 import java.util.Collections;

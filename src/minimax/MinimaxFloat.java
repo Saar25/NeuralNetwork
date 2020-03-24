@@ -1,6 +1,6 @@
 package minimax;
 
-import util.LazyFloat;
+import util.lazy.LazyFloat;
 import util.floatnode.InternalFloatNode;
 import util.floatnode.LeafFloatNode;
 import util.floatnode.FloatNode;

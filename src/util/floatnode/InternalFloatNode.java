@@ -1,6 +1,6 @@
 package util.floatnode;
 
-import util.Lazy;
+import util.lazy.Lazy;
 
 import java.util.ArrayList;
 import java.util.Arrays;

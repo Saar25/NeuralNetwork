@@ -1,8 +1,9 @@
-package util;
+package util.lazy;
 
 import java.util.function.IntSupplier;
+import java.util.function.Supplier;
 
-public class LazyInt {
+public class LazyInt implements Supplier<Integer> {
 
     private final IntSupplier supplier;
     private boolean assigned;
@@ -19,21 +20,29 @@ public class LazyInt {
         this.value = value;
     }
 
-    public int get() {
-        if (!assigned) {
-            assigned = true;
-            value = supplier.getAsInt();
-        }
-        return value;
+    public boolean isAssigned() {
+        return assigned;
     }
 
     public int reassign() {
-        assigned = true;
+        this.assigned = true;
         return value = supplier.getAsInt();
     }
 
     public void forget() {
-        assigned = false;
+        this.assigned = false;
+    }
+
+    public int getValue() {
+        if (!isAssigned()) {
+            reassign();
+        }
+        return value;
+    }
+
+    @Override
+    public Integer get() {
+        return getValue();
     }
 
     @Override
