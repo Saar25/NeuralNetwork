@@ -1,6 +1,10 @@
 package util.nodefloat;
 
 import util.LazyFloat;
+import util.Node;
+
+import java.util.Collections;
+import java.util.List;
 
 public class LeafFloatNode implements FloatNode {
 
@@ -11,23 +15,8 @@ public class LeafFloatNode implements FloatNode {
     }
 
     @Override
-    public float compare(float value) {
-        return get() - value;
-    }
-
-    @Override
-    public FloatNode getHighest() {
-        return NullFloatNode.getInstance();
-    }
-
-    @Override
-    public FloatNode getLowest() {
-        return NullFloatNode.getInstance();
-    }
-
-    @Override
-    public FloatNode getNext() {
-        return NullFloatNode.getInstance();
+    public List<? extends Node<Float>> getChildren() {
+        return Collections.emptyList();
     }
 
     @Override

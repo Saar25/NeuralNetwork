@@ -3,6 +3,8 @@ package util.nodefloat;
 import util.Lazy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class InternalFloatNode implements FloatNode {
@@ -10,57 +12,38 @@ public class InternalFloatNode implements FloatNode {
     private final Lazy<FloatNode> value;
     private final List<FloatNode> nodes;
 
-    private InternalFloatNode(Lazy<FloatNode> value, List<FloatNode> nodes) {
+    private InternalFloatNode(Lazy<FloatNode> value, Collection<FloatNode> nodes) {
         this.value = value;
         this.nodes = new ArrayList<>(nodes);
     }
 
+    private InternalFloatNode(Lazy<FloatNode> value, FloatNode... nodes) {
+        this(value, Arrays.asList(nodes));
+    }
+
     public static InternalFloatNode maxOf(List<FloatNode> nodes) {
-        return new InternalFloatNode(new Lazy<>(() -> highest(nodes)), nodes);
+        return new InternalFloatNode(new Lazy<>(() ->
+                FloatNodeUtil.highest(nodes)), nodes);
     }
 
     public static InternalFloatNode minOf(List<FloatNode> nodes) {
-        return new InternalFloatNode(new Lazy<>(() -> highest(nodes)), nodes);
+        return new InternalFloatNode(new Lazy<>(() ->
+                FloatNodeUtil.lowest(nodes)), nodes);
     }
 
-    private static FloatNode highest(List<FloatNode> nodes) {
-        FloatNode highest = nodes.get(0);
-        for (FloatNode node : nodes) {
-            if (node.get() > highest.get()) {
-                highest = node;
-            }
-        }
-        return highest;
+    public static InternalFloatNode maxOf(FloatNode... nodes) {
+        return new InternalFloatNode(new Lazy<>(() ->
+                FloatNodeUtil.highest(nodes)), nodes);
     }
 
-    private static FloatNode lowest(List<FloatNode> nodes) {
-        FloatNode lowest = nodes.get(0);
-        for (FloatNode node : nodes) {
-            if (node.get() < lowest.get()) {
-                lowest = node;
-            }
-        }
-        return lowest;
+    public static InternalFloatNode minOf(FloatNode... nodes) {
+        return new InternalFloatNode(new Lazy<>(() ->
+                FloatNodeUtil.lowest(nodes)), nodes);
     }
 
     @Override
-    public float compare(float value) {
-        return get() - value;
-    }
-
-    @Override
-    public FloatNode getHighest() {
-        return highest(nodes);
-    }
-
-    @Override
-    public FloatNode getLowest() {
-        return lowest(nodes);
-    }
-
-    @Override
-    public FloatNode getNext() {
-        return value.get();
+    public List<FloatNode> getChildren() {
+        return nodes;
     }
 
     @Override

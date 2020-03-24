@@ -28,14 +28,6 @@ public class MinimaxFloat {
                 : InternalFloatNode.minOf(Arrays.asList(n1, n2));
     }
 
-    public void setMax() {
-        head = head.getHighest();
-    }
-
-    public void setMin() {
-        head = head.getLowest();
-    }
-
     @Override
     public String toString() {
         return "[MinimaxFloat Head: " + head + "]";

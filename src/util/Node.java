@@ -1,8 +1,10 @@
 package util;
 
+import java.util.List;
+
 public interface Node<T> {
 
-    Node<T> getNext();
+    List<? extends Node<T>> getChildren();
 
     T getValue();
 

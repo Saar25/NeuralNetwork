@@ -1,5 +1,9 @@
 package util.nodefloat;
 
+import util.Node;
+
+import java.util.List;
+
 public class NullFloatNode implements FloatNode {
 
     public static NullFloatNode instance = new NullFloatNode();
@@ -13,22 +17,7 @@ public class NullFloatNode implements FloatNode {
     }
 
     @Override
-    public float compare(float value) {
-        throw new UnsupportedOperationException("Null node does not have a value");
-    }
-
-    @Override
-    public FloatNode getHighest() {
-        throw new UnsupportedOperationException("Null node does not have children");
-    }
-
-    @Override
-    public FloatNode getLowest() {
-        throw new UnsupportedOperationException("Null node does not have children");
-    }
-
-    @Override
-    public FloatNode getNext() {
+    public List<Node<Float>> getChildren() {
         throw new UnsupportedOperationException("Null node does not have children");
     }
 
