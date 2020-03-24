@@ -1,4 +1,4 @@
-package util.nodefloat;
+package util.floatnode;
 
 import java.util.Arrays;
 import java.util.Collection;

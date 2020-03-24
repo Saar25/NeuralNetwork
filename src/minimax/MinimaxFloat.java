@@ -1,9 +1,9 @@
 package minimax;
 
 import util.LazyFloat;
-import util.nodefloat.InternalFloatNode;
-import util.nodefloat.LeafFloatNode;
-import util.nodefloat.FloatNode;
+import util.floatnode.InternalFloatNode;
+import util.floatnode.LeafFloatNode;
+import util.floatnode.FloatNode;
 
 import java.util.Arrays;
 
