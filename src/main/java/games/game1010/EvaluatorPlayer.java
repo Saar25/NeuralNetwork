@@ -26,6 +26,10 @@ public class EvaluatorPlayer {
     }
 
     public void place(Shape shape) {
+        if (isDead()) {
+            return;
+        }
+
         final List<Position> placements = shape.getPossiblePlacements(board);
 
         if (placements.size() == 0) {
