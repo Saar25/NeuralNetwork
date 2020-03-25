@@ -36,7 +36,7 @@ public class Board {
             setCell(position, new Cell());
             inc(position);
         } else {
-            throw new IllegalStateException("There is already a cell in " + position)
+            throw new IllegalStateException("There is already a cell in " + position);
         }
     }
 
