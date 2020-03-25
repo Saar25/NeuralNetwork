@@ -17,4 +17,8 @@ public class Shape {
     public boolean[][] getCells() {
         return cells;
     }
+
+    public boolean[][] draw(Board board, Position position) {
+        
+    }
 }
