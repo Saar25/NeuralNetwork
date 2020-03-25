@@ -1,5 +1,6 @@
 package games.flappybird;
 
+import games.GenerationSettings;
 import games.gui.Rectangle;
 import games.gui.Renderer;
 import games.gui.Window;

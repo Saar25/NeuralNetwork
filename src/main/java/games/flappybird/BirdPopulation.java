@@ -1,5 +1,6 @@
 package games.flappybird;
 
+import games.GenerationSettings;
 import games.gui.Drawable;
 import games.gui.Rectangle;
 import math.Vector2;

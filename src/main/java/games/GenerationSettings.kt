@@ -1,4 +1,4 @@
-package games.flappybird
+package games
 
 import kotlin.math.ceil
 
