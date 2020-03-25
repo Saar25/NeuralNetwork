@@ -37,9 +37,10 @@ public class Shape {
     public void place(Board board, Position position) {
         for (int row = 0; row < getCells().length; row++) {
             for (int col = 0; col < getCells()[row].length; col++) {
-                final Cell cell = getCells()[row][col] ? new Cell() : null;
-                final Position current = position.add(row, col);
-                board.setCell(current, cell);
+                if (getCells()[row][col]) {
+                    final Position current = position.add(row, col);
+                    board.setCell(current, new Cell());
+                }
             }
         }
     }
