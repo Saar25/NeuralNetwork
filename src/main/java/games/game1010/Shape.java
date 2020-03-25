@@ -23,7 +23,7 @@ public class Shape {
             for (int row = 0; row < getCells().length; row++) {
                 for (int col = 0; col < getCells()[row].length; col++) {
                     final Position current = position.add(row, col);
-                    if (board.hasCell(current)) {
+                    if (getCells()[row][col] && board.hasCell(current)) {
                         return false;
                     }
                 }

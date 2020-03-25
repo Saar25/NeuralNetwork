@@ -10,8 +10,8 @@ public class Position {
         this.col = col;
     }
 
-    public Position add(int x, int y) {
-        return new Position(getRow() + x, getCol() + y);
+    public Position add(int row, int col) {
+        return new Position(getRow() + row, getCol() + col);
     }
 
     public int getRow() {
