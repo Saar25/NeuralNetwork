@@ -5,9 +5,13 @@ import util.Maths;
 public class Board {
 
     private final Cell[][] cells;
+    private final int[] cellsRows;
+    private final int[] cellsCols;
 
     public Board(int size) {
         this.cells = new Cell[size][size];
+        this.cellsRows = new int[size];
+        this.cellsCols = new int[size];
     }
 
     public boolean exist(Position position) {
@@ -27,11 +31,50 @@ public class Board {
         getCells()[position.getRow()][position.getCol()] = cell;
     }
 
+    public void placeCell(Position position) {
+        setCell(position, new Cell());
+        inc(position);
+    }
+
     public Cell[][] getCells() {
         return this.cells;
     }
 
     public int getSize() {
         return getCells().length;
+    }
+
+    public void update() {
+        for (int row = 0; row < getSize(); row++) {
+            if (this.cellsRows[row] == getSize()) {
+                clearRow(row);
+            }
+        }
+        for (int col = 0; col < getSize(); col++) {
+            if (this.cellsCols[col] == getSize()) {
+                clearCol(col);
+            }
+        }
+    }
+
+    private void inc(Position position) {
+        this.cellsRows[position.getRow()]++;
+        this.cellsCols[position.getCol()]++;
+    }
+
+    private void clearRow(int row) {
+        this.cellsRows[row] = 0;
+        for (int col = 0; col < getSize(); col++) {
+            getCells()[row][col] = null;
+            this.cellsCols[col]--;
+        }
+    }
+
+    private void clearCol(int col) {
+        this.cellsCols[col] = 0;
+        for (int row = 0; row < getSize(); row++) {
+            getCells()[row][col] = null;
+            this.cellsRows[row]--;
+        }
     }
 }
