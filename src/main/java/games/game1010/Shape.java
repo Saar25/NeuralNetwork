@@ -18,7 +18,15 @@ public class Shape {
         return cells;
     }
 
-    public boolean[][] draw(Board board, Position position) {
-        
+    public boolean draw(Board board, Position position) {
+        if (board.exist(position) && board.exist(position.add(getCells().length, getCells()[0].length))) {
+            for (int i = 0; i < getCells().length; i++) {
+                for (int j = 0; j < getCells()[i].length; j++) {
+                    if (board.)
+                }
+            }
+        } else {
+            return false;
+        }
     }
 }
