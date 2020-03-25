@@ -1,22 +1,17 @@
 package games.game1010;
 
-import com.google.gson.Gson;
-
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.Arrays;
+import java.util.List;
 
 public class ShapesReader {
 
     public static void main(String[] args) throws FileNotFoundException {
-        final Gson gson = new Gson();
 
-        final File file = new File("shapes.json");
-        System.out.println(file.exists());
-        final Shape shape = gson.fromJson(new FileReader(file), Shape.class);
+        final String path = "C:\\Users\\Dorit-t\\Desktop\\Saar\\IntelliJ Projects\\NeuralNetwork\\src\\main\\resources\\shapes.json";
+        final ShapesFile shapesFile = ShapesFile.read(path);
+        final List<Shape> shapes = shapesFile.parse();
 
-        System.out.println(Arrays.deepToString(shape.getCells()));
+        System.out.println(shapes);
     }
 
 }
