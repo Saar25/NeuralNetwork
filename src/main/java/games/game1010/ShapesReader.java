@@ -18,8 +18,7 @@ public class ShapesReader {
         shapes.get(0).place(board, new Position(0, 0));
         shapes.get(1).place(board, new Position(1, 1));
         shapes.get(2).place(board, new Position(2, 2));
-        System.out.println(shapes.get(4).canBePlaced(board, new Position(2, 3)));
-        shapes.get(4).place(board, new Position(2, 3));
+        shapes.get(4).place(board, new Position(2, 1));
 
         final BoardPainter painter = new ConsolePainter();
         painter.paint(board);
