@@ -27,10 +27,6 @@ public class Board {
         return getCell(position) != null;
     }
 
-    public void setCell(Position position, Cell cell) {
-        getCells()[position.getRow()][position.getCol()] = cell;
-    }
-
     public void placeCell(Position position) {
         if (!hasCell(position)) {
             setCell(position, new Cell());
@@ -40,12 +36,16 @@ public class Board {
         }
     }
 
-    public Cell[][] getCells() {
+    public int getSize() {
+        return getCells().length;
+    }
+
+    private Cell[][] getCells() {
         return this.cells;
     }
 
-    public int getSize() {
-        return getCells().length;
+    private void setCell(Position position, Cell cell) {
+        getCells()[position.getRow()][position.getCol()] = cell;
     }
 
     public void update() {
