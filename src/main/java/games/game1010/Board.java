@@ -32,8 +32,12 @@ public class Board {
     }
 
     public void placeCell(Position position) {
-        setCell(position, new Cell());
-        inc(position);
+        if (!hasCell(position)) {
+            setCell(position, new Cell());
+            inc(position);
+        } else {
+            throw new IllegalStateException("There is already a cell in " + position)
+        }
     }
 
     public Cell[][] getCells() {
