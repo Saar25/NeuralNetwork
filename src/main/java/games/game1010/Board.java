@@ -8,6 +8,8 @@ public class Board {
     private final int[] cellsRows;
     private final int[] cellsCols;
 
+    private int points = 0;
+
     public Board(int size) {
         this.cells = new Cell[size][size];
         this.cellsRows = new int[size];
@@ -41,6 +43,7 @@ public class Board {
         if (!hasCell(position)) {
             setCell(position, new Cell());
             inc(position);
+            points++;
         } else {
             throw new IllegalStateException("There is already a cell in " + position);
         }
@@ -48,6 +51,10 @@ public class Board {
 
     public int getSize() {
         return getCells().length;
+    }
+
+    public int getPoints() {
+        return points;
     }
 
     private Cell[][] getCells() {
@@ -62,11 +69,13 @@ public class Board {
         for (int row = 0; row < getSize(); row++) {
             if (this.cellsRows[row] == getSize()) {
                 clearRow(row);
+                points += getSize();
             }
         }
         for (int col = 0; col < getSize(); col++) {
             if (this.cellsCols[col] == getSize()) {
                 clearCol(col);
+                points += getSize();
             }
         }
     }
