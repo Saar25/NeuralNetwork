@@ -2,23 +2,23 @@ package games.game1010;
 
 public class Position {
 
-    private final int x;
-    private final int y;
+    private final int row;
+    private final int col;
 
-    public Position(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Position(int row, int col) {
+        this.row = row;
+        this.col = col;
     }
 
     public Position add(int x, int y) {
-        return new Position(getX() + x, getY() + y);
+        return new Position(getRow() + x, getCol() + y);
     }
 
-    public int getX() {
-        return x;
+    public int getRow() {
+        return row;
     }
 
-    public int getY() {
-        return y;
+    public int getCol() {
+        return col;
     }
 }

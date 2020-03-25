@@ -11,12 +11,12 @@ public class Board {
     }
 
     public boolean exist(Position position) {
-        return Maths.isInside(position.getX(), 0, cells.length - 1) &&
-                Maths.isInside(position.getY(), 0, cells[0].length - 1);
+        return Maths.isInside(position.getRow(), 0, cells.length - 1) &&
+                Maths.isInside(position.getCol(), 0, cells[0].length - 1);
     }
 
     public Cell getCell(Position position) {
-        return this.cells[position.getX()][position.getY()];
+        return this.cells[position.getRow()][position.getCol()];
     }
 
     public boolean hasCell(Position position) {
@@ -24,7 +24,7 @@ public class Board {
     }
 
     public void setCell(Position position, Cell cell) {
-        this.cells[position.getX()][position.getY()] = cell;
+        this.cells[position.getRow()][position.getCol()] = cell;
     }
 
 }
