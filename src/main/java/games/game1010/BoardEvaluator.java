@@ -22,4 +22,8 @@ public class BoardEvaluator {
         return evaluator.feedForward(input)[0];
     }
 
+    public BoardEvaluator mutate(float mutationRate) {
+        return new BoardEvaluator(evaluator.mutate(mutationRate));
+    }
+
 }
