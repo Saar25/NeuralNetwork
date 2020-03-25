@@ -6,22 +6,30 @@ public class EvaluatorPlayer {
 
     private final Board board;
     private final BoardEvaluator evaluator;
-    private boolean isAlive = true;
+    private boolean isDead = false;
 
     public EvaluatorPlayer(Board board, BoardEvaluator evaluator) {
         this.board = board;
         this.evaluator = evaluator;
     }
 
-    public boolean isAlive() {
-        return isAlive;
+    public Board getBoard() {
+        return board;
+    }
+
+    public BoardEvaluator getEvaluator() {
+        return evaluator;
+    }
+
+    public boolean isDead() {
+        return isDead;
     }
 
     public void place(Shape shape) {
         final List<Position> placements = shape.getPossiblePlacements(board);
 
         if (placements.size() == 0) {
-            this.isAlive = false;
+            this.isDead = true;
             return;
         }
 
