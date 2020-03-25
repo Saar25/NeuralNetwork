@@ -14,6 +14,16 @@ public class Board {
         this.cellsCols = new int[size];
     }
 
+    public Board copy() {
+        final Board board = new Board(getSize());
+        for (int row = 0; row < getSize(); row++) {
+            System.arraycopy(getCells()[row], 0, board.getCells()[row], 0, getSize());
+        }
+        System.arraycopy(this.cellsCols, 0, board.cellsCols, 0, getSize());
+        System.arraycopy(this.cellsRows, 0, board.cellsRows, 0, getSize());
+        return board;
+    }
+
     public boolean exist(Position position) {
         return Maths.isInside(position.getRow(), 0, getSize() - 1) &&
                 Maths.isInside(position.getCol(), 0, getSize() - 1);
