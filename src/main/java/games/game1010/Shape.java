@@ -42,5 +42,6 @@ public class Shape {
                 }
             }
         }
+        board.update();
     }
 }
