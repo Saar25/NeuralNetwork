@@ -37,7 +37,7 @@ public class Shape {
     }
 
     public boolean canBePlaced(Board board, Position position) {
-        final Position endingPosition = position.add(width(), height());
+        final Position endingPosition = position.add(width() - 1, height() - 1);
         if (!board.exist(position) || !board.exist(endingPosition)) {
             return false;
         }
