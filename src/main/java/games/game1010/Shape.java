@@ -5,20 +5,22 @@ import java.util.List;
 
 public class Shape {
 
-    private final String name;
     private final boolean[][] cells;
 
-    public Shape(String name, boolean[][] cells) {
-        this.name = name;
+    public Shape(boolean[][] cells) {
         this.cells = cells;
     }
 
-    public String getName() {
-        return name;
+    private boolean[][] getCells() {
+        return cells;
     }
 
-    public boolean[][] getCells() {
-        return cells;
+    private int width() {
+        return getCells().length;
+    }
+
+    private int height() {
+        return getCells()[0].length;
     }
 
     public List<Position> getPossiblePlacements(Board board) {
@@ -35,17 +37,17 @@ public class Shape {
     }
 
     public boolean canBePlaced(Board board, Position position) {
-        if (board.exist(position) && board.exist(position.add(getCells().length, getCells()[0].length))) {
-            for (int row = 0; row < getCells().length; row++) {
-                for (int col = 0; col < getCells()[row].length; col++) {
-                    final Position current = position.add(row, col);
-                    if (getCells()[row][col] && board.hasCell(current)) {
-                        return false;
-                    }
+        final Position endingPosition = position.add(width(), height());
+        if (!board.exist(position) || !board.exist(endingPosition)) {
+            return false;
+        }
+        for (int row = 0; row < getCells().length; row++) {
+            for (int col = 0; col < getCells()[row].length; col++) {
+                final Position current = position.add(row, col);
+                if (getCells()[row][col] && board.hasCell(current)) {
+                    return false;
                 }
             }
-        } else {
-            return false;
         }
         return true;
     }
