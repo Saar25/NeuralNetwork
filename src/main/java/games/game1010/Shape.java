@@ -1,5 +1,8 @@
 package games.game1010;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Shape {
 
     private final String name;
@@ -16,6 +19,19 @@ public class Shape {
 
     public boolean[][] getCells() {
         return cells;
+    }
+
+    public List<Position> getPossiblePlacements(Board board) {
+        final List<Position> possiblePlacements = new ArrayList<>();
+        for (int row = 0; row < board.getSize(); row++) {
+            for (int col = 0; col < board.getSize(); col++) {
+                final Position current = new Position(row, col);
+                if (canBePlaced(board, current)) {
+                    possiblePlacements.add(current);
+                }
+            }
+        }
+        return possiblePlacements;
     }
 
     public boolean canBePlaced(Board board, Position position) {
