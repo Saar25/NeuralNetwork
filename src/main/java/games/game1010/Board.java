@@ -8,5 +8,12 @@ public class Board {
         this.cells = new Cell[size][size];
     }
 
+    public boolean exist(Position position) {
+        return
+    }
+
+    public void setCell(Position position, Cell cell) {
+        this.cells[position.getX()][position.getY()] = cell;
+    }
 
 }
