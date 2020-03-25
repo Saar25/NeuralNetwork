@@ -15,6 +15,12 @@ public class Game1010 {
 
         final RandomShape randomShape = new RandomShape(shapes);
         final Board board = new Board(10);
+
+        shapes.get(5).place(board, new Position(0, 0));
+        shapes.get(5).place(board, new Position(3, 0));
+        shapes.get(5).place(board, new Position(6, 0));
+        shapes.get(2).place(board, new Position(9, 0));
+
         final BoardPainter painter = new ConsolePainter();
 
         painter.paint(board);

@@ -31,7 +31,7 @@ public class ShapesFile {
                     cells[i][j] = this.cells[i][j] != 0;
                 }
             }
-            return new Shape(cells);
+            return new Shape(name, cells);
         }
     }
 }
