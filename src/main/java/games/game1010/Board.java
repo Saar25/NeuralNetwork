@@ -11,8 +11,8 @@ public class Board {
     }
 
     public boolean exist(Position position) {
-        return Maths.isInside(position.getRow(), 0, getCells().length - 1) &&
-                Maths.isInside(position.getCol(), 0, getCells()[0].length - 1);
+        return Maths.isInside(position.getRow(), 0, getSize() - 1) &&
+                Maths.isInside(position.getCol(), 0, getSize() - 1);
     }
 
     public Cell getCell(Position position) {
@@ -29,5 +29,9 @@ public class Board {
 
     public Cell[][] getCells() {
         return this.cells;
+    }
+
+    public int getSize() {
+        return getCells().length;
     }
 }
