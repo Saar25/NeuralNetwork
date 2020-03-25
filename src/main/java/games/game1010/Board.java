@@ -1,5 +1,7 @@
 package games.game1010;
 
+import util.Maths;
+
 public class Board {
 
     private final Cell[][] cells;
@@ -9,7 +11,8 @@ public class Board {
     }
 
     public boolean exist(Position position) {
-        return
+        return Maths.isInside(position.getX(), 0, cells.length - 1) &&
+                Maths.isInside(position.getY(), 0, cells[0].length - 1);
     }
 
     public void setCell(Position position, Cell cell) {
