@@ -12,7 +12,7 @@ public class Position {
 
     public Position add(int x, int y) {
         return new Position(getX() + x, getY() + y);
-    }a
+    }
 
     public int getX() {
         return x;
