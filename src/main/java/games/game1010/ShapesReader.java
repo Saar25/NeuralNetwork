@@ -1,7 +1,7 @@
 package games.game1010;
 
-import games.game1010.paint.BoardPainter;
-import games.game1010.paint.ConsolePainter;
+import games.game1010.painters.BoardPainter;
+import games.game1010.painters.ConsolePainter;
 
 import java.io.FileNotFoundException;
 import java.util.List;

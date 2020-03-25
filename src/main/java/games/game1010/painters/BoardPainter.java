@@ -1,4 +1,4 @@
-package games.game1010.paint;
+package games.game1010.painters;
 
 import games.game1010.Board;
 
