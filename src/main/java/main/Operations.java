@@ -1,7 +1,7 @@
 package main;
 
 import neural.INeural;
-import neural.MatrixNeuralNetwork;
+import neural.matrix.MatrixNeuralNetwork;
 import neural.Neural;
 import neural.NeuralNetwork;
 

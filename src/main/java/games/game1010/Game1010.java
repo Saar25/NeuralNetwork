@@ -2,7 +2,7 @@ package games.game1010;
 
 import games.game1010.painters.BoardPainter;
 import games.game1010.painters.ConsolePainter;
-import neural.MatrixNeuralNetwork;
+import neural.matrix.MatrixNeuralNetwork;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

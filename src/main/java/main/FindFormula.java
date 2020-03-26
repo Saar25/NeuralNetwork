@@ -1,6 +1,6 @@
 package main;
 
-import neural.MatrixNeuralNetwork;
+import neural.matrix.MatrixNeuralNetwork;
 import neural.NeuralNetwork;
 
 public class FindFormula {

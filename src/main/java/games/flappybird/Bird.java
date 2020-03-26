@@ -3,7 +3,7 @@ package games.flappybird;
 import games.gui.Drawable;
 import games.gui.Rectangle;
 import math.Vector2;
-import neural.MatrixNeuralNetwork;
+import neural.matrix.MatrixNeuralNetwork;
 
 import java.awt.*;
 

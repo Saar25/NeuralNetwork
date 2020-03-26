@@ -1,21 +1,25 @@
-package neural;
+package neural.matrix;
 
-import math.Maths;
 import math.Matrixf;
+import neural.NeuralLayer;
 
 public class MatrixNeuralLayer implements NeuralLayer {
+
+    private final MatrixNeuralNetworkConfig config;
 
     private Matrixf weights;
     private Matrixf biases;
 
-    private MatrixNeuralLayer(Matrixf weights, Matrixf biases) {
+    private MatrixNeuralLayer(MatrixNeuralNetworkConfig config, Matrixf weights, Matrixf biases) {
         this.weights = weights;
         this.biases = biases;
+        this.config = config;
     }
 
-    public MatrixNeuralLayer(int neurals, int inputs) {
+    public MatrixNeuralLayer(MatrixNeuralNetworkConfig config, int neurals, int inputs) {
         this.weights = Matrixf.randomize(neurals, inputs);
         this.biases = Matrixf.randomize(neurals, 1);
+        this.config = config;
     }
 
     @Override
@@ -41,9 +45,9 @@ public class MatrixNeuralLayer implements NeuralLayer {
 
     @Override
     public MatrixNeuralLayer mutate(float rate) {
-        final Matrixf weights = this.weights.mutate(rate);
         final Matrixf biases = this.biases.mutate(rate);
-        return new MatrixNeuralLayer(weights, biases);
+        final Matrixf weights = this.weights.mutate(rate);
+        return new MatrixNeuralLayer(config, weights, biases);
     }
 
     @Override
@@ -69,14 +73,15 @@ public class MatrixNeuralLayer implements NeuralLayer {
     }
 
     public Matrixf adjust(Matrixf input, Matrixf output, Matrixf error) {
-        final Matrixf delta = output.map(Maths.dsigmoid)
-                .mul(error).mul(.5f);
+        final Matrixf delta = output.map(value -> config
+                .getActivationFunction().derivative(value))
+                .mul(error).mul(config.getLearningRate());
         final Matrixf inputT = input.transpose();
         final Matrixf deltaWeights = delta.dot(inputT);
 
-        weights = weights.add(deltaWeights);
-        biases = biases.add(delta);
-        return weights.transpose().dot(error);
+        this.weights = this.weights.add(deltaWeights);
+        this.biases = this.biases.add(delta);
+        return this.weights.transpose().dot(error);
     }
 
     @Override

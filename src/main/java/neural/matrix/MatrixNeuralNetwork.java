@@ -1,7 +1,8 @@
-package neural;
+package neural.matrix;
 
-import math.Maths;
 import math.Matrixf;
+import neural.NeuralNetwork;
+import neural.function.SigmoidFunction;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -9,23 +10,25 @@ import java.util.List;
 
 public class MatrixNeuralNetwork implements NeuralNetwork {
 
+    private final MatrixNeuralNetworkConfig config;
+
     private final List<MatrixNeuralLayer> layers = new ArrayList<>();
     private int outputs;
 
-    private MatrixNeuralNetwork(int inputs) {
-        this.outputs = inputs;
-    }
+    public MatrixNeuralNetwork(MatrixNeuralNetworkConfig config) {
+        this.config = config;
 
-    public MatrixNeuralNetwork(int inputs, int outputs) {
-        this.outputs = inputs;
-        addLayer(outputs);
-    }
-
-    public MatrixNeuralNetwork(int inputs, int... layers) {
-        this.outputs = inputs;
-        for (int neurals : layers) {
-            addLayer(neurals);
+        this.outputs = config.getLayers().get(0);
+        for (int i = 1; i < config.getLayers().size(); i++) {
+            addLayer(config.getLayers().get(i));
         }
+    }
+
+    @Deprecated
+    public MatrixNeuralNetwork(int inputs, int... layers) {
+        this(new MatrixNeuralNetworkConfig()
+                .setLayers(inputs, layers).setLearningRate(.5f)
+                .setActivationFunction(new SigmoidFunction()));
     }
 
     private void addLayer(MatrixNeuralLayer layer) {
@@ -33,9 +36,8 @@ public class MatrixNeuralNetwork implements NeuralNetwork {
         this.outputs = layer.getOutputs();
     }
 
-    @Override
     public void addLayer(int neurals) {
-        this.addLayer(new MatrixNeuralLayer(neurals, outputs));
+        this.addLayer(new MatrixNeuralLayer(config, neurals, outputs));
     }
 
     @Override
@@ -65,7 +67,8 @@ public class MatrixNeuralNetwork implements NeuralNetwork {
         Matrixf output = input;
         for (MatrixNeuralLayer layer : layers) {
             output = layer.process(input);
-            input = output.map(Maths.sigmoid);
+            input = output.map(value -> config
+                    .getActivationFunction().apply(value));
         }
         return output;
     }
@@ -78,7 +81,8 @@ public class MatrixNeuralNetwork implements NeuralNetwork {
         Matrixf output = input;
         for (MatrixNeuralLayer layer : layers) {
             outputs.add(output = layer.process(input));
-            inputs.add(input = output.map(Maths.sigmoid));
+            inputs.add(input = output.map(value -> config
+                    .getActivationFunction().apply(value)));
         }
 
         Matrixf error = target.sub(output);

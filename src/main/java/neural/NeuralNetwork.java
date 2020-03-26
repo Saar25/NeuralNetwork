@@ -3,13 +3,6 @@ package neural;
 public interface NeuralNetwork {
 
     /**
-     * Append a layer to the neural network
-     *
-     * @param neurals the number of nodes of the layer
-     */
-    void addLayer(int neurals);
-
-    /**
      * Feed forward the given inputs and process it
      *
      * @param inputs the inputs

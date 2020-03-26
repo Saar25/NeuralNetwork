@@ -1,7 +1,7 @@
 package main;
 
 import math.Maths;
-import neural.MatrixNeuralNetwork;
+import neural.matrix.MatrixNeuralNetwork;
 import neural.NeuralNetwork;
 import util.Progress;
 import util.StopWatch;
