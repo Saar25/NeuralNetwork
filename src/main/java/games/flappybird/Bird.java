@@ -3,7 +3,9 @@ package games.flappybird;
 import games.gui.Drawable;
 import games.gui.Rectangle;
 import math.Vector2;
+import neural.function.TanHFunction;
 import neural.matrix.MatrixNeuralNetwork;
+import neural.matrix.MatrixNeuralNetworkConfig;
 
 import java.awt.*;
 
@@ -22,7 +24,7 @@ public class Bird implements Drawable {
     private final Vector2 velocity = Vector2.mutable(xSpeed, 0);
 
     public Bird(Vector2 position, Vector2 dimensions) {
-        this(position, dimensions, new BirdBrain(new MatrixNeuralNetwork(4, 4, 2)));
+        this(position, dimensions, newBrain());
     }
 
     public Bird(Vector2 position, Vector2 dimensions, BirdBrain brain) {
@@ -36,6 +38,13 @@ public class Bird implements Drawable {
         final Vector2 dimensions = getDimensions().copy();
         final BirdBrain mutatedBrain = brain.mutate(rate);
         return new Bird(position, dimensions, mutatedBrain);
+    }
+
+    private static BirdBrain newBrain() {
+        final MatrixNeuralNetworkConfig config = new MatrixNeuralNetworkConfig()
+                .setActivationFunction(new TanHFunction())
+                .setLayers(4, 4, 2).setLearningRate(.5f);
+        return new BirdBrain(new MatrixNeuralNetwork(config));
     }
 
     public void jump() {
