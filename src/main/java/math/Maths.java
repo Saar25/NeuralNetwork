@@ -32,6 +32,10 @@ public final class Maths {
         return x * (1 - x);
     }
 
+    public static float expf(float value) {
+        return (float) Math.exp(value);
+    }
+
     public static float max(float max, float... values) {
         for (float value : values)
             max = Math.max(max, value);
