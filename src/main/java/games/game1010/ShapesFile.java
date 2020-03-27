@@ -1,6 +1,7 @@
 package games.game1010;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -9,6 +10,7 @@ import java.util.stream.Collectors;
 
 public class ShapesFile {
 
+    @SerializedName("shapes")
     private List<ShapeModel> shapes;
 
     public static ShapesFile read(String path) throws FileNotFoundException {
@@ -21,7 +23,11 @@ public class ShapesFile {
     }
 
     public static class ShapeModel {
+
+        @SerializedName("name")
         private String name;
+
+        @SerializedName("cells")
         private int[][] cells;
 
         public Shape parse() {
