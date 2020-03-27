@@ -11,7 +11,7 @@ public class BoardEvaluator {
     }
 
     public float evaluate(Board board) {
-        final float[] input = createInputs(board)
+        final float[] input = createInputs(board);
         return evaluator.feedForward(input)[0];
     }
 
