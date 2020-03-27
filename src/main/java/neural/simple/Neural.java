@@ -1,6 +1,7 @@
-package neural;
+package neural.simple;
 
 import math.Maths;
+import neural.INeural;
 
 public class Neural implements INeural {
 

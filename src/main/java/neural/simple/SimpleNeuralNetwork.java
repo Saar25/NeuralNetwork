@@ -1,4 +1,4 @@
-package neural;
+package neural.simple;
 
 public class SimpleNeuralNetwork {
 }

@@ -2,7 +2,7 @@ package main;
 
 import neural.INeural;
 import neural.matrix.MatrixNeuralNetwork;
-import neural.Neural;
+import neural.simple.Neural;
 import neural.NeuralNetwork;
 
 import java.util.Arrays;
