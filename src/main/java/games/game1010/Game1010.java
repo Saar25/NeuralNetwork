@@ -2,7 +2,10 @@ package games.game1010;
 
 import games.game1010.painters.BoardPainter;
 import games.game1010.painters.ConsolePainter;
+import neural.NeuralNetwork;
+import neural.function.SigmoidFunction;
 import neural.matrix.MatrixNeuralNetwork;
+import neural.matrix.MatrixNeuralNetworkConfig;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -10,13 +13,21 @@ import java.util.List;
 
 public class Game1010 {
 
+    private static final int BOARD_SIZE = 10;
+
+    private static final int PLAYERS_COUNT = 100;
+
+    private static final MatrixNeuralNetworkConfig CONFIG = new MatrixNeuralNetworkConfig()
+            .setLayers(100, 10, 10, 1).setLearningRate(.5f)
+            .setActivationFunction(new SigmoidFunction());
+
     public static void main(String[] args) throws FileNotFoundException {
         final String path = "src/main/resources/shapes.json";
         final ShapesFile shapesFile = ShapesFile.read(path);
         final List<Shape> shapes = shapesFile.parse();
 
         final RandomShape randomShape = new RandomShape(shapes);
-        final List<EvaluatorPlayer> players = createPlayers(200);
+        final List<EvaluatorPlayer> players = createPlayers();
         final List<EvaluatorPlayer> deadPlayers = new ArrayList<>();
 
         while (!players.isEmpty()) {
@@ -42,12 +53,12 @@ public class Game1010 {
         System.out.println(bestPlayer.getBoard().getPoints());
     }
 
-    private static List<EvaluatorPlayer> createPlayers(int playerCount) {
+    private static List<EvaluatorPlayer> createPlayers() {
         final List<EvaluatorPlayer> players = new ArrayList<>();
-        for (int i = 0; i < playerCount; i++) {
-            final Board board = new Board(10);
-            final BoardEvaluator evaluator = new BoardEvaluator(
-                    new MatrixNeuralNetwork(100, 10, 10, 1));
+        for (int i = 0; i < PLAYERS_COUNT; i++) {
+            final Board board = new Board(BOARD_SIZE);
+            final NeuralNetwork neuralNetwork = new MatrixNeuralNetwork(CONFIG);
+            final BoardEvaluator evaluator = new BoardEvaluator(neuralNetwork);
             players.add(new EvaluatorPlayer(board, evaluator));
         }
         return players;
