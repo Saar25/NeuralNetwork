@@ -1,7 +1,8 @@
 package games.game1010;
 
 import games.game1010.painters.BoardPainter;
-import games.game1010.painters.ConsolePainter;
+import games.game1010.painters.GuiPainter;
+import games.gui.Window;
 import neural.NeuralNetwork;
 import neural.function.SigmoidFunction;
 import neural.matrix.MatrixNeuralNetwork;
@@ -49,7 +50,13 @@ public class Game1010 {
                 p1.getBoard().getPoints() > p2.getBoard().getPoints() ? p1 : p1).orElse(null);
         assert bestPlayer != null;
 
-        final BoardPainter painter = new ConsolePainter();
+        final int cellSize = 50;
+        final Window window = new Window("1010");
+        final int windowSize = cellSize * BOARD_SIZE + cellSize * 5 / 2;
+        window.initialized(windowSize, windowSize + 20, false);
+
+        final BoardPainter painter = new GuiPainter(window, cellSize);
+
         painter.paint(bestPlayer.getBoard());
         System.out.println(bestPlayer.getBoard().getPoints());
     }
