@@ -1,29 +1,64 @@
 {
   "shapes": [
     {
-      "name": "one",
+      "name": "smallSquare",
       "cells": [
         [1]
-      ]
+      ],
+      "rotatable": false
     },
     {
-      "name": "two",
+      "name": "mediumSquare",
+      "cells": [
+        [1, 1],
+        [1, 1]
+      ],
+      "rotatable": false
+    },
+    {
+      "name": "bigSquare",
+      "cells": [
+        [1, 1, 1],
+        [1, 1, 1],
+        [1, 1, 1]
+      ],
+      "rotatable": false
+    },
+    {
+      "name": "smallLine",
       "cells": [
         [1, 1]
-      ]
+      ],
+      "rotatable": true
     },
     {
-      "name": "three",
+      "name": "mediumLine",
       "cells": [
         [1, 1, 1]
-      ]
+      ],
+      "rotatable": true
+    },
+    {
+      "name": "bigLine",
+      "cells": [
+        [1, 1, 1, 1]
+      ],
+      "rotatable": true
+    },
+    {
+      "name": "hugeLine",
+      "cells": [
+        [1, 1, 1, 1, 1]
+      ],
+      "rotatable": true
     },
     {
       "name": "smallL",
       "cells": [
         [1, 0],
         [1, 1]
-      ]
+      ],
+      "rotatable": true
     },
     {
       "name": "bigL",
@@ -31,15 +66,8 @@
         [1, 0, 0],
         [1, 0, 0],
         [1, 1, 1]
-      ]
-    },
-    {
-      "name": "block",
-      "cells": [
-        [1, 1, 1],
-        [1, 1, 1],
-        [1, 1, 1]
-      ]
+      ],
+      "rotatable": true
     }
   ]
 }

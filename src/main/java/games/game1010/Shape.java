@@ -7,20 +7,22 @@ public class Shape {
 
     private final String name;
     private final boolean[][] cells;
+    private final boolean rotatable;
 
-    public Shape(String name, boolean[][] cells) {
+    public Shape(String name, boolean[][] cells, boolean rotatable) {
         this.name = name;
         this.cells = cells;
+        this.rotatable = rotatable;
     }
 
     public List<Shape> getRotatedVariations() {
         final List<Shape> variations = new ArrayList<>(4);
         variations.add(this);
-        
+
         boolean[][] cells = getCells();
         for (int i = 0; i < 3; i++) {
             cells = rotate(cells);
-            variations.add(new Shape(name, cells));
+            variations.add(new Shape(name, cells, rotatable));
         }
         return variations;
     }
