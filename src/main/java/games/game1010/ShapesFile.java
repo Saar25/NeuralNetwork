@@ -30,6 +30,9 @@ public class ShapesFile {
         @SerializedName("cells")
         private int[][] cells;
 
+        @SerializedName("rotatable")
+        private boolean rotatable;
+
         public Shape parse() {
             final boolean[][] cells = new boolean[this.cells.length][this.cells[0].length];
             for (int i = 0; i < this.cells.length; i++) {
@@ -37,7 +40,7 @@ public class ShapesFile {
                     cells[i][j] = this.cells[i][j] != 0;
                 }
             }
-            return new Shape(name, cells);
+            return new Shape(name, cells, rotatable);
         }
     }
 }
