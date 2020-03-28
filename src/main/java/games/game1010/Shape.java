@@ -1,6 +1,7 @@
 package games.game1010;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Shape {
@@ -16,6 +17,11 @@ public class Shape {
     }
 
     public List<Shape> getRotatedVariations() {
+        if (!rotatable) {
+            // need same probability for the random shape
+            return Arrays.asList(this, this, this, this);
+        }
+
         final List<Shape> variations = new ArrayList<>(4);
         variations.add(this);
 
