@@ -24,7 +24,8 @@ public class Game1010 {
     public static void main(String[] args) throws FileNotFoundException {
         final String path = "src/main/resources/shapes.json";
         final ShapesFile shapesFile = ShapesFile.read(path);
-        final List<Shape> shapes = shapesFile.parse();
+        final List<Shape> baseShapes = shapesFile.parse();
+        final List<Shape> shapes = addRotatedVariations(baseShapes);
 
         final RandomShape randomShape = new RandomShape(shapes);
         final List<EvaluatorPlayer> players = createPlayers();
@@ -51,6 +52,14 @@ public class Game1010 {
         final BoardPainter painter = new ConsolePainter();
         painter.paint(bestPlayer.getBoard());
         System.out.println(bestPlayer.getBoard().getPoints());
+    }
+
+    private static List<Shape> addRotatedVariations(List<Shape> baseShapes) {
+        final List<Shape> shapes = new ArrayList<>();
+        for (Shape baseShape : baseShapes) {
+            shapes.addAll(baseShape.getRotatedVariations());
+        }
+        return shapes;
     }
 
     private static List<EvaluatorPlayer> createPlayers() {

@@ -13,6 +13,30 @@ public class Shape {
         this.cells = cells;
     }
 
+    public List<Shape> getRotatedVariations() {
+        final List<Shape> variations = new ArrayList<>(4);
+        variations.add(this);
+        
+        boolean[][] cells = getCells();
+        for (int i = 0; i < 3; i++) {
+            cells = rotate(cells);
+            variations.add(new Shape(name, cells));
+        }
+        return variations;
+    }
+
+    private static boolean[][] rotate(boolean[][] matrix) {
+        final int M = matrix.length;
+        final int N = matrix[0].length;
+        final boolean[][] rotated = new boolean[N][M];
+        for (int row = 0; row < M; row++) {
+            for (int col = 0; col < N; col++) {
+                rotated[col][M - 1 - row] = matrix[row][col];
+            }
+        }
+        return rotated;
+    }
+
     private boolean[][] getCells() {
         return cells;
     }
