@@ -28,21 +28,18 @@ public class Game1010 {
         final List<Shape> baseShapes = shapesFile.parse();
         final List<Shape> shapes = addRotatedVariations(baseShapes);
 
-        final RandomShape randomShape = new RandomShape(shapes);
-        final List<EvaluatorPlayer> players = createPlayers();
-        final Generation generation = new Generation(players);
-
-        while (!generation.isAllDead()) {
-            final Shape next = randomShape.next();
-            generation.makeMove(next);
-        }
-
         final int cellSize = 50;
         final Window window = new Window("1010");
         final int windowSize = cellSize * BOARD_SIZE + cellSize * 5 / 2;
         window.initialized(windowSize, windowSize + 20, false);
-
         final BoardPainter painter = new GuiPainter(window, cellSize);
+
+        final RandomShape randomShape = new RandomShape(shapes);
+
+        final List<EvaluatorPlayer> players = createPlayers();
+        final Generation generation = new Generation(players);
+
+        runGeneration(generation, randomShape);
 
         final EvaluatorPlayer bestPlayer = generation.getBest();
         painter.paint(bestPlayer.getBoard());
@@ -66,6 +63,13 @@ public class Game1010 {
             players.add(new EvaluatorPlayer(board, evaluator));
         }
         return players;
+    }
+
+    private static void runGeneration(Generation generation, RandomShape randomShape) {
+        while (!generation.isAllDead()) {
+            final Shape next = randomShape.next();
+            generation.makeMove(next);
+        }
     }
 
 }
