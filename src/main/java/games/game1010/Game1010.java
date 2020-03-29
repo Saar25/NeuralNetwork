@@ -30,25 +30,12 @@ public class Game1010 {
 
         final RandomShape randomShape = new RandomShape(shapes);
         final List<EvaluatorPlayer> players = createPlayers();
-        final List<EvaluatorPlayer> deadPlayers = new ArrayList<>();
+        final Generation generation = new Generation(players);
 
-        while (!players.isEmpty()) {
+        while (!generation.isAllDead()) {
             final Shape next = randomShape.next();
-            for (EvaluatorPlayer player : players) {
-                player.place(next);
-            }
-            for (EvaluatorPlayer player : players) {
-                if (player.isDead()) {
-                    deadPlayers.add(player);
-                }
-            }
-            players.removeIf(EvaluatorPlayer::isDead);
+            generation.makeMove(next);
         }
-
-
-        final EvaluatorPlayer bestPlayer = deadPlayers.stream().reduce((p1, p2) ->
-                p1.getBoard().getPoints() > p2.getBoard().getPoints() ? p1 : p1).orElse(null);
-        assert bestPlayer != null;
 
         final int cellSize = 50;
         final Window window = new Window("1010");
@@ -57,6 +44,7 @@ public class Game1010 {
 
         final BoardPainter painter = new GuiPainter(window, cellSize);
 
+        final EvaluatorPlayer bestPlayer = generation.getBest();
         painter.paint(bestPlayer.getBoard());
         System.out.println(bestPlayer.getBoard().getPoints());
     }

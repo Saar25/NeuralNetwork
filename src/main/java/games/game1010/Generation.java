@@ -18,23 +18,31 @@ public class Generation {
         for (EvaluatorPlayer player : players) {
             player.place(shape);
         }
-        this.players.stream().filter(EvaluatorPlayer::isDead).forEach(player -> {
-            this.players.remove(player);
-            this.deadPlayers.add(player);
-        });
+        final List<EvaluatorPlayer> newDead = new ArrayList<>();
+        for (EvaluatorPlayer player : this.players) {
+            if (player.isDead()) {
+                newDead.add(player);
+            }
+        }
+        this.deadPlayers.addAll(newDead);
+        this.players.removeAll(newDead);
     }
 
     public boolean isAllDead() {
         return players.size() == 0;
     }
 
-    public List<EvaluatorPlayer> getBest(int amount) {
+    public EvaluatorPlayer getBest() {
+        return getBests(1).get(0);
+    }
+
+    public List<EvaluatorPlayer> getBests(int amount) {
         final List<EvaluatorPlayer> allPlayers = new ArrayList<>();
         allPlayers.addAll(this.deadPlayers);
         allPlayers.addAll(this.players);
         allPlayers.sort(Comparator.comparingInt(
                 o -> o.getBoard().getPoints()));
-        return allPlayers.subList(0, amount - 1);
+        return allPlayers.subList(0, amount);
     }
 
 }
