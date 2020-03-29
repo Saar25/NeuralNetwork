@@ -18,6 +18,8 @@ public class Game1010 {
 
     private static final int PLAYERS_COUNT = 100;
 
+    private static final float LEARNING_RATE = .5f;
+
     private static final MatrixNeuralNetworkConfig CONFIG = new MatrixNeuralNetworkConfig()
             .setLayers(100, 10, 10, 1).setLearningRate(.5f)
             .setActivationFunction(new SigmoidFunction());
@@ -36,14 +38,20 @@ public class Game1010 {
 
         final RandomShape randomShape = new RandomShape(shapes);
 
-        final List<EvaluatorPlayer> players = createPlayers();
-        final Generation generation = new Generation(players);
+        List<EvaluatorPlayer> players = createPlayers();
+        Generation generation = new Generation(players);
 
-        runGeneration(generation, randomShape);
+        while (true) {
+            runGeneration(generation, randomShape);
 
-        final EvaluatorPlayer bestPlayer = generation.getBest();
-        painter.paint(bestPlayer.getBoard());
-        System.out.println(bestPlayer.getBoard().getPoints());
+            final EvaluatorPlayer bestPlayer = generation.getBest();
+            painter.paint(bestPlayer.getBoard());
+            System.out.println(bestPlayer.getBoard().getPoints());
+
+            players = generation.getBests(PLAYERS_COUNT / 10);
+            players = addMutations(players, 10);
+            generation = new Generation(players);
+        }
     }
 
     private static List<Shape> addRotatedVariations(List<Shape> baseShapes) {
@@ -70,6 +78,17 @@ public class Game1010 {
             final Shape next = randomShape.next();
             generation.makeMove(next);
         }
+    }
+
+    private static List<EvaluatorPlayer> addMutations(List<EvaluatorPlayer> players, int mutationsFromEach) {
+        final List<EvaluatorPlayer> mutations = new ArrayList<>();
+        for (EvaluatorPlayer player : players) {
+            for (int i = 0; i < mutationsFromEach; i++) {
+                final BoardEvaluator evaluator = player.getEvaluator().mutate(LEARNING_RATE);
+                mutations.add(new EvaluatorPlayer(new Board(BOARD_SIZE), evaluator));
+            }
+        }
+        return mutations;
     }
 
 }
