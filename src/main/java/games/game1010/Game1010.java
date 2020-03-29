@@ -16,12 +16,12 @@ public class Game1010 {
 
     private static final int BOARD_SIZE = 10;
 
-    private static final int PLAYERS_COUNT = 100;
+    private static final int PLAYERS_COUNT = 300;
 
     private static final float LEARNING_RATE = .5f;
 
     private static final MatrixNeuralNetworkConfig CONFIG = new MatrixNeuralNetworkConfig()
-            .setLayers(100, 10, 10, 1).setLearningRate(.5f)
+            .setLayers(100, 50, 30, 1).setLearningRate(.5f)
             .setActivationFunction(new SigmoidFunction());
 
     public static void main(String[] args) throws FileNotFoundException {
