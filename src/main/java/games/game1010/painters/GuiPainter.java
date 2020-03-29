@@ -3,7 +3,6 @@ package games.game1010.painters;
 import games.game1010.Board;
 import games.game1010.Cell;
 import games.game1010.Position;
-import games.gui.Drawable;
 import games.gui.Renderer;
 import games.gui.Window;
 
@@ -11,14 +10,12 @@ import java.awt.*;
 
 public class GuiPainter implements BoardPainter {
 
-    private final Window window;
     private final Renderer renderer;
     private final int cellSize;
 
     private Board board;
 
     public GuiPainter(Window window, int cellSize) {
-        this.window = window;
         this.cellSize = cellSize;
         this.renderer = new Renderer();
         window.add(renderer);
